@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>素材库</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+    --primary:#0d6efd;
+    --secondary:#6c757d;
+    --radius-card:8px;
+    --radius-btn:4px;
+    --gap:8px;
+    --font-family:"Helvetica Neue",Arial,sans-serif;
+}
+body{
+    margin:0;
+    font-family:var(--font-family);
+    background:#f8f9fa;
+    padding-top:56px; /* 为自动注入的导航留出空间 */
+}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:var(--gap);
+}
+.search-bar{
+    display:flex;
+    gap:var(--gap);
+    margin-bottom:var(--gap);
+}
+.search-bar input{
+    flex:1;
+    padding:0.4em;
+    border:1px solid #ccc;
+    border-radius:var(--radius-btn);
+}
+.search-bar button{
+    padding:0.4em 1em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    transition:background .2s;
+}
+.search-bar button:hover{
+    background:#0b5ed7;
+}
+.grid{
+    display:grid;
+    gap:var(--gap);
+}
+@media (min-width:600px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (min-width:900px){
+    .grid{grid-template-columns:repeat(3,1fr);}
+}
+.card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+.card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    background:#ddd;
+}
+.card .info{
+    padding:calc(var(--gap)*1);
+    flex:1;
+}
+.card .info h3{
+    margin:0 0 var(--gap) 0;
+    font-size:1rem;
+    color:#333;
+    word-break:break-all;
+}
+.card .info p{
+    margin:0;
+    font-size:0.9rem;
+    color:#555;
+}
+.card button{
+    margin:var(--gap);
+    padding:0.4em 0.8em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    transition:background .2s;
+}
+.card button:hover{
+    background:#0b5ed7;
+}
+.pagination{
+    display:flex;
+    justify-content:center;
+    gap:var(--gap);
+    margin:var(--gap) 0;
+}
+.pagination button{
+    padding:0.4em 0.8em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    transition:background .2s;
+}
+.pagination button[disabled]{
+    background:#aaa;
+    cursor:not-allowed;
+}
+.pagination button:hover:not([disabled]){
+    background:#0b5ed7;
+}
+</style>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:title" content="素材库">
+<meta property="og:description" content="展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="素材库">
+<meta name="twitter:description" content="展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"素材库","description":"展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style>
+<meta name="description" content="展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="素材库"><meta property="og:description" content="展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="素材库"><meta name="twitter:description" content="展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"素材库","description":"展示公共模型、纹理、材质，支持搜索、分页；点击素材直接插入当前编辑器（若已打开）或打开新编辑器页面。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<body>
+<div class="container">
+    <h1 style="margin-top:0;color:#333;">素材库</h1>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="搜索模型、纹理、材质...">
+        <button id="searchBtn">搜索</button>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<script>
+// 简易数据源（实际项目可改为 fetch 本地 JSON）
+const assets = [
+    {id:'m1',type:'model',name:'立方体',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDB2ODBoMTIwVjB6Ii8+PC9zdmc+'},
+    {id:'m2',type:'model',name:'球体',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYwIiBjeT0iNDAiIHI9IjQwIiBmaWxsPSIjZmZmIi8+PC9zdmc+'},
+    {id:'t1',type:'texture',name:'红色纹理',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT4uZyB7ZmlsbDpyZ2IoMjU1LCAwLCAwKX08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iODAiIGNsYXNzPSJnIi8+PC9zdmc+'},
+    {id:'t2',type:'texture',name:'蓝色纹理',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT4uZyB7ZmlsbDpyZ2IoMCwgMCwgMjU1KX08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iODAiIGNsYXNzPSJnIi8+PC9zdmc+'},
+    {id:'s1',type:'material',name:'金属材质',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT4uZyB7ZmlsbDpyZ2IoMjU1LCAyNTUsIDApfTwvc3R5bGU+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSI4MCIgY2xhc3M9ImciLz48L3N2Zz4='},
+    {id:'s2',type:'material',name:'玻璃材质',preview:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzdHlsZT4uZyB7ZmlsbDpyZ2IoMjU1LCAyNTUsIDI1NSk7b3BhY2l0eTowLjU7fTwvc3R5bGU+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSI4MCIgY2xhc3M9ImciLz48L3N2Zz4='}
+];
+let filtered = assets.slice();
+let currentPage = 1;
+const pageSize = 6;
+
+function renderGrid(){
+    const grid=document.getElementById('grid');
+    grid.innerHTML='';
+    const start=(currentPage-1)*pageSize;
+    const pageItems=filtered.slice(start,start+pageSize);
+    pageItems.forEach(item=>{
+        const card=document.createElement('div');
+        card.className='card';
+        card.innerHTML=`
+            <img src="${item.preview}" alt="${item.name}">
+            <div class="info">
+                <h3>${item.name}</h3>
+                <p>类型: ${item.type}</p>
+            </div>
+            <button data-id="${item.id}">插入</button>
+        `;
+        grid.appendChild(card);
+    });
+    renderPagination();
+}
+function renderPagination(){
+    const totalPages=Math.ceil(filtered.length/pageSize)||1;
+    const pag=document.getElementById('pagination');
+    pag.innerHTML='';
+    const prev=document.createElement('button');
+    prev.textContent='← 上一页';
+    prev.disabled=currentPage===1;
+    prev.onclick=()=>{currentPage--;renderGrid();};
+    const next=document.createElement('button');
+    next.textContent='下一页 →';
+    next.disabled=currentPage===totalPages;
+    next.onclick=()=>{currentPage++;renderGrid();};
+    const info=document.createElement('span');
+    info.textContent=`第 ${currentPage} / ${totalPages} 页`;
+    pag.appendChild(prev);
+    pag.appendChild(info);
+    pag.appendChild(next);
+}
+function applySearch(){
+    const term=document.getElementById('searchInput').value.trim().toLowerCase();
+    if(term){
+        filtered=assets.filter(a=>a.name.toLowerCase().includes(term)||a.type.toLowerCase().includes(term));
+    }else{
+        filtered=assets.slice();
+    }
+    currentPage=1;
+    renderGrid();
+}
+document.getElementById('searchBtn').addEventListener('click',applySearch);
+document.getElementById('searchInput').addEventListener('keypress',e=>{if(e.key==='Enter')applySearch();});
+document.getElementById('grid').addEventListener('click',e=>{
+    if(e.target.tagName==='BUTTON'){
+        const id=e.target.getAttribute('data-id');
+        const asset=assets.find(a=>a.id===id);
+        if(!asset) return;
+        // 将资产信息写入 localStorage，供编辑器读取
+        localStorage.setItem('INSERT_ASSET',JSON.stringify(asset));
+        // 若当前页面是从编辑器打开的子窗口，直接通知父窗口
+        if(window.opener && !window.opener.closed){
+            window.opener.postMessage({type:'insert-asset',asset},'*');
+        }else{
+            // 打开编辑器并加载资产，使用统一的 ?id= 参数
+            window.location.href=`editor.html?id=${encodeURIComponent(asset.id)}`;
+        }
+    }
+});
+// 监听来自编辑器的消息（可选）
+window.addEventListener('message',event=>{
+    if(event.data && event.data.type==='request-asset'){
+        const asset=JSON.parse(localStorage.getItem('INSERT_ASSET')||'null');
+        event.source.postMessage({type:'asset-response',asset},'*');
+    }
+});
+renderGrid();
+</script>
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent">
+    <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:0;">© 2026 AutoA2A</a>
+</footer>
+</body>
+</html>
