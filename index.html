@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>首页 - 快速开始编辑</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+    --primary:#0d6efd;
+    --secondary:#6c757d;
+    --radius-card:8px;
+    --radius-btn:4px;
+    --gap:8px;
+    --font-family:"Helvetica Neue",Arial,sans-serif;
+}
+body{
+    margin:0;
+    font-family:var(--font-family);
+    background:#f8f9fa;
+    padding-top:56px; /* 为系统注入的导航留出空间 */
+}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:var(--gap);
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--gap);
+}
+.card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    padding:calc(var(--gap)*2);
+    flex:1 1 300px;
+}
+h1{margin-top:0;color:#333;}
+h2{margin-top:0;color:#333;}
+p{color:#555;line-height:1.5;}
+.btn{
+    display:inline-block;
+    padding:0.5em 1em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    text-decoration:none;
+    transition:background .2s;
+}
+.btn:hover{background:#0b5ed7;}
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+}
+.modal.active{display:flex;}
+.modal-content{
+    background:#fff;
+    padding:calc(var(--gap)*2);
+    border-radius:var(--radius-card);
+    width:90%;
+    max-width:400px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+.input-group{
+    margin-bottom:var(--gap);
+}
+.input-group label{
+    display:block;
+    margin-bottom:4px;
+    font-size:0.9rem;
+    color:#333;
+}
+.input-group input{
+    width:100%;
+    padding:0.4em;
+    border:1px solid #ccc;
+    border-radius:var(--radius-btn);
+    font-size:1rem;
+}
+#glcanvas{
+    width:100%;
+    height:400px;
+    background:#000;
+    border-radius:var(--radius-card);
+    display:block;
+}
+@media (max-width:600px){
+    .container{flex-direction:column;}
+}
+</style>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:title" content="首页 - 快速开始编辑">
+<meta property="og:description" content="展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="首页 - 快速开始编辑">
+<meta name="twitter:description" content="展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"首页 - 快速开始编辑",
+  "description":"展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。",
+  "applicationCategory":"UtilitiesApplication",
+  "operatingSystem":"Any",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}
+}
+</script>
+<meta name="description" content="展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="首页 - 快速开始编辑"><meta property="og:description" content="展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="首页 - 快速开始编辑"><meta name="twitter:description" content="展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"首页 - 快速开始编辑","description":"展示产品简介、示例模型、登录/注册入口；登录后直接跳转至 dashboard.html；未登录用户可点击“立即编辑”弹出登录框。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+<body>
+
+<div class="container">
+    <!-- 产品简介 -->
+    <div class="card">
+        <h1>WebGL 3D 在线编辑器</h1>
+        <p>✅️AutoA2A是智能体互连 Agent to Agent平台，实现智能体间的无缝发现、协商、协作与数据安全交换，让您的智能体从信息孤岛走向高效协同，重塑数字化生产力。赋能多智能体生态发展自动化与AI协作,开启AI即服务新时代。</p>
+        <p>在浏览器中直接创建、编辑、预览 3D 模型，无需安装任何插件。</p>
+        <a id="startBtn" class="btn">立即编辑</a>
+        <a href="login.html" class="btn" style="margin-left:var(--gap);background:var(--secondary);">登录</a>
+        <a href="about.html" class="btn" style="margin-left:var(--gap);background:var(--secondary);">了解更多</a>
+    </div>
+
+    <!-- 示例模型 -->
+    <div class="card">
+        <h2>示例模型</h2>
+        <canvas id="glcanvas"></canvas>
+        <p style="margin-top:var(--gap);font-size:0.9rem;color:#666;">旋转的彩色立方体，展示渲染能力。</p>
+    </div>
+</div>
+
+<!-- 登录弹窗 -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h3>登录 / 注册</h3>
+        <div class="input-group">
+            <label for="email">邮箱</label>
+            <input type="email" id="email" placeholder="example@domain.com">
+        </div>
+        <div class="input-group">
+            <label for="pwd">密码</label>
+            <input type="password" id="pwd" placeholder="******">
+        </div>
+        <button id="loginSubmit" class="btn">登录</button>
+        <button id="loginCancel" class="btn" style="margin-left:var(--gap);background:var(--secondary);">取消</button>
+    </div>
+</div>
+
+<script>
+/* ---------- 登录状态管理 ---------- */
+function isLogged(){return !!localStorage.getItem('token');}
+function gotoDashboard(){location.href='dashboard.html';}
+function showLogin(){document.getElementById('loginModal').classList.add('active');}
+function hideLogin(){document.getElementById('loginModal').classList.remove('active');}
+
+/* ---------- 按钮交互 ---------- */
+document.getElementById('startBtn').addEventListener('click',function(){
+    if(isLogged()){
+        gotoDashboard();
+    }else{
+        showLogin();
+    }
+});
+document.getElementById('loginCancel').addEventListener('click',hideLogin);
+document.getElementById('loginSubmit').addEventListener('click',function(){
+    const email=document.getElementById('email').value.trim();
+    const pwd=document.getElementById('pwd').value;
+    if(email && pwd){
+        localStorage.setItem('token',btoa(email+':'+pwd));
+        hideLogin();
+        gotoDashboard();
+    }else{
+        alert('请填写完整信息');
+    }
+});
+
+/* ---------- 简易 WebGL 立方体渲染 ---------- */
+(function(){
+    const canvas=document.getElementById('glcanvas');
+    const gl=canvas.getContext('webgl');
+    if(!gl){
+        canvas.textContent='WebGL not supported';
+        return;
+    }
+
+    // 顶点着色器
+    const vsSource=`
+        attribute vec3 aPos;
+        attribute vec3 aColor;
+        uniform mat4 uMVP;
+        varying vec3 vColor;
+        void main(){
+            gl_Position = uMVP * vec4(aPos, 1.0);
+            vColor = aColor;
+        }
+    `;
+    // 片元着色器
+    const fsSource=`
+        precision mediump float;
+        varying vec3 vColor;
+        void main(){
+            gl_FragColor = vec4(vColor, 1.0);
+        }
+    `;
+
+    function compileShader(type, source){
+        const shader=gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
+            console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
+    }
+
+    const vertexShader=compileShader(gl.VERTEX_SHADER, vsSource);
+    const fragmentShader=compileShader(gl.FRAGMENT_SHADER, fsSource);
+    const program=gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
+        console.error('Program link error:', gl.getProgramInfoLog(program));
+        return;
+    }
+    gl.useProgram(program);
+
+    // 立方体数据 (位置 + 颜色)
+    const vertices=new Float32Array([
+        // x, y, z,   r, g, b
+        -1,-1,-1,  1,0,0,
+         1,-1,-1,  0,1,0,
+         1, 1,-1,  0,0,1,
+        -1, 1,-1,  1,1,0,
+        -1,-1, 1,  1,0,1,
+         1,-1, 1,  0,1,1,
+         1, 1, 1,  1,1,1,
+        -1, 1, 1,  0,0,0,
+    ]);
+    const indices=new Uint16Array([
+        0,1,2, 0,2,3,
+        1,5,6, 1,6,2,
+        5,4,7, 5,7,6,
+        4,0,3, 4,3,7,
+        3,2,6, 3,6,7,
+        4,5,1, 4,1,0
+    ]);
+
+    const vbo=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    const ibo=gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+    const stride=6*Float32Array.BYTES_PER_ELEMENT;
+    const aPos=gl.getAttribLocation(program, 'aPos');
+    gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, stride, 0);
+    gl.enableVertexAttribArray(aPos);
+    const aColor=gl.getAttribLocation(program, 'aColor');
+    gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, stride, 3*Float32Array.BYTES_PER_ELEMENT);
+    gl.enableVertexAttribArray(aColor);
+
+    const uMVP=gl.getUniformLocation(program, 'uMVP');
+
+    function deg2rad(d){return d*Math.PI/180;}
+
+    function multiplyMatrices(a,b){
+        const out=new Float32Array(16);
+        for(let i=0;i<4;i++){
+            for(let j=0;j<4;j++){
+                out[i*4+j]=0;
+                for(let k=0;k<4;k++){
+                    out[i*4+j]+=a[i*4+k]*b[k*4+j];
+                }
+            }
+        }
+        return out;
+    }
+
+    function getMVP(angle){
+        const c=Math.cos(deg2rad(angle));
+        const s=Math.sin(deg2rad(angle));
+        const model=new Float32Array([
+            c, 0, s, 0,
+            0, 1, 0, 0,
+           -s, 0, c, 0,
+            0, 0, 0, 1
+        ]);
+        const proj=new Float32Array([
+            1.5, 0,   0,   0,
+            0,   1.5, 0,   0,
+            0,   0,  -1.2,-0.2,
+            0,   0,  -1,   0
+        ]);
+        return multiplyMatrices(proj, model);
+    }
+
+    let angle=0;
+    function render(){
+        gl.viewport(0,0,canvas.width,canvas.height);
+        gl.clearColor(0.1,0.1,0.1,1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.enable(gl.DEPTH_TEST);
+
+        const mvp=getMVP(angle);
+        gl.uniformMatrix4fv(uMVP, false, mvp);
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+
+        angle+=0.6;
+        requestAnimationFrame(render);
+    }
+
+    // 调整 canvas 尺寸以适配高 DPI
+    function resizeCanvas(){
+        const dpr=window.devicePixelRatio||1;
+        const rect=canvas.getBoundingClientRect();
+        canvas.width=rect.width*dpr;
+        canvas.height=rect.height*dpr;
+        gl.viewport(0,0,canvas.width,canvas.height);
+    }
+    window.addEventListener('resize',resizeCanvas);
+    resizeCanvas();
+    render();
+})();
+</script>
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
+</html>
