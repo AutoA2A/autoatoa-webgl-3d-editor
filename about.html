@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>关于我们</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+    --primary:#0d6efd;
+    --secondary:#6c757d;
+    --radius-card:8px;
+    --radius-btn:4px;
+    --gap:8px;
+    --font-family:"Helvetica Neue",Arial,sans-serif;
+}
+body{
+    margin:0;
+    font-family:var(--font-family);
+    background:#f8f9fa;
+    padding-top:56px; /* 为自动注入的导航留出空间 */
+}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:var(--gap);
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--gap);
+}
+.card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    padding:calc(var(--gap)*2);
+    flex:1 1 300px;
+}
+h1{margin-top:0;color:#333;}
+p{color:#555;line-height:1.5;}
+.btn{
+    display:inline-block;
+    padding:0.5em 1em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    text-decoration:none;
+    transition:background .2s;
+}
+.btn:hover{background:#0b5ed7;}
+@media (max-width:600px){
+    .container{flex-direction:column;}
+}
+</style>
+<meta name="description" content="介绍项目背景、技术栈、团队成员及联系方式；提供返回首页的链接。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="关于我们"><meta property="og:description" content="介绍项目背景、技术栈、团队成员及联系方式；提供返回首页的链接。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="关于我们"><meta name="twitter:description" content="介绍项目背景、技术栈、团队成员及联系方式；提供返回首页的链接。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"关于我们","description":"介绍项目背景、技术栈、团队成员及联系方式；提供返回首页的链接。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>关于我们</h1>
+        <p>✅️AutoA2A是智能体互连 Agent to Agent平台，实现智能体间的无缝发现、协商、协作与数据安全交换，让您的智能体从信息孤岛走向高效协同，重塑数字化生产力。赋能多智能体生态发展自动化与AI协作,开启AI即服务新时代。</p>
+        <h2>项目背景</h2>
+        <p>本项目旨在打造一个基于WebGL的3D在线编辑器，让用户能够在浏览器中直接创建、编辑和预览3D模型，无需安装任何插件。</p>
+        <h2>技术栈</h2>
+        <p>前端：原生JavaScript、WebGL、Canvas、SVG</p>
+        <p>后端：支持WebSocket的服务器（具体技术栈未在本页展示）</p>
+        <h2>团队成员</h2>
+        <p>我们的团队由一群热爱3D技术和前端开发的工程师组成。</p>
+        <h2>联系方式</h2>
+        <p>邮箱：<a href="mailto:info@autoa2a.org" style="color:var(--primary);">info@autoa2a.org</a></p>
+        <p>官网：<a href="https://www.autoa2a.org" target="_blank" style="color:var(--primary);">www.autoa2a.org</a></p>
+        <a href="index.html" class="btn">返回首页</a>
+    </div>
+</div>
+
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
+</html>
