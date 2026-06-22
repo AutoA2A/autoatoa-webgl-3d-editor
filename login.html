@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>登录 / 注册</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:title" content="登录 / 注册">
+<meta property="og:description" content="输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="登录 / 注册">
+<meta name="twitter:description" content="输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"登录 / 注册",
+  "description":"输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。",
+  "applicationCategory":"UtilitiesApplication",
+  "operatingSystem":"Any",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}
+}
+</script>
+<style>
+:root{
+    --primary:#0d6efd;
+    --secondary:#6c757d;
+    --radius-card:8px;
+    --radius-btn:4px;
+    --gap:8px;
+    --font-family:"Helvetica Neue",Arial,sans-serif;
+}
+body{
+    margin:0;
+    font-family:var(--font-family);
+    background:#f8f9fa;
+    padding-top:56px; /* 为自动注入的导航留出空间 */
+}
+.container{
+    max-width:480px;
+    margin:40px auto;
+    padding:var(--gap);
+}
+.card{
+    background:#fff;
+    border-radius:var(--radius-card);
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    padding:calc(var(--gap)*2);
+}
+h2{
+    margin-top:0;
+    color:#333;
+    text-align:center;
+}
+.input-group{
+    margin-bottom:var(--gap);
+}
+.input-group label{
+    display:block;
+    margin-bottom:4px;
+    font-size:0.9rem;
+    color:#333;
+}
+.input-group input{
+    width:100%;
+    padding:0.4em;
+    border:1px solid #ccc;
+    border-radius:var(--radius-btn);
+    font-size:1rem;
+}
+.btn{
+    display:inline-block;
+    width:100%;
+    padding:0.6em;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-btn);
+    cursor:pointer;
+    font-size:1rem;
+    transition:background .2s;
+}
+.btn:hover{
+    background:#0b5ed7;
+}
+.toggle{
+    margin-top:var(--gap);
+    text-align:center;
+    font-size:0.9rem;
+    color:var(--secondary);
+}
+.toggle a{
+    color:var(--primary);
+    text-decoration:none;
+    cursor:pointer;
+}
+@media (max-width:600px){
+    .container{margin:20px;}
+}
+</style>
+<style data-a2a="basecss">
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img,canvas,svg,video,table{max-width:100%;height:auto}
+pre,code{white-space:pre-wrap;word-break:break-word}
+[data-a2a="header"]{width:100%}
+@media(max-width:640px){body{font-size:15px}}
+</style>
+<meta name="description" content="输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="登录 / 注册"><meta property="og:description" content="输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="登录 / 注册"><meta name="twitter:description" content="输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"登录 / 注册","description":"输入邮箱/密码完成登录，成功后将 token 存 localStorage 并跳转至 dashboard.html。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<body>
+<div class="container">
+    <div class="card">
+        <h2 id="form-title">登录</h2>
+        <form id="auth-form" novalidate>
+            <div class="input-group">
+                <label for="email">邮箱</label>
+                <input type="email" id="email" required autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" required autocomplete="current-password">
+            </div>
+            <div class="input-group" id="confirm-group" style="display:none;">
+                <label for="confirm-password">确认密码</label>
+                <input type="password" id="confirm-password" autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn">登录</button>
+        </form>
+        <div class="toggle">
+            没有账号？ <a id="switch-to-register">立即注册</a>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    const form = document.getElementById('auth-form');
+    const title = document.getElementById('form-title');
+    const toggleDiv = document.querySelector('.toggle');
+    const confirmGroup = document.getElementById('confirm-group');
+    let mode = 'login'; // login or register
+
+    function switchMode(){
+        if(mode==='login'){
+            mode='register';
+            title.textContent='注册';
+            form.querySelector('button').textContent='注册';
+            confirmGroup.style.display='block';
+            toggleDiv.innerHTML='已有账号？ <a id="switch-to-login">立即登录</a>';
+        }else{
+            mode='login';
+            title.textContent='登录';
+            form.querySelector('button').textContent='登录';
+            confirmGroup.style.display='none';
+            toggleDiv.innerHTML='没有账号？ <a id="switch-to-register">立即注册</a>';
+        }
+        attachToggleHandler();
+    }
+
+    function attachToggleHandler(){
+        const link = toggleDiv.querySelector('a');
+        link.onclick = switchMode;
+    }
+
+    attachToggleHandler();
+
+    form.onsubmit = function(e){
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const pwd = document.getElementById('password').value;
+        if(!email || !pwd){
+            alert('请填写完整信息');
+            return;
+        }
+        if(mode==='register'){
+            const confirmPwd = document.getElementById('confirm-password').value;
+            if(pwd !== confirmPwd){
+                alert('两次输入的密码不一致');
+                return;
+            }
+        }
+        // 简单模拟后端：生成伪 token
+        const token = btoa(email+':'+Date.now());
+        try{
+            localStorage.setItem('token', token);
+            localStorage.setItem('userEmail', email);
+        }catch(err){
+            console.error('localStorage error', err);
+        }
+        // 跳转到仪表盘
+        location.href='dashboard.html';
+    };
+})();
+</script>
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent">
+    <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px">
+        <img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0">
+    </a>
+    <div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">
+        ✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。
+    </div>
+    <div style="font-size:13px">
+        本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成
+    </div>
+    <div style="font-size:12px;color:#aab;margin-top:6px">
+        Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有
+    </div>
+</footer>
+</body>
+</html>
