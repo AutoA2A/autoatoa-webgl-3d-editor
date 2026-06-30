@@ -1,13 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>模型预览 / 分享</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模型预览</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .nav-bar {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 16px;
+            text-align: center;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-bar li {
+            margin-right: 16px;
+        }
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 16px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .nav-bar ul {
+                flex-direction: column;
+            }
+            .nav-bar li {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+<meta name="description" content="读取模型数据，仅渲染展示，提供下载 GLTF、生成分享链接、社交分享按钮和嵌入代码"><meta name="keywords" content="WebGL, 3D 编辑器, 在线编辑, 协作编辑, 模型渲染"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="模型预览"><meta property="og:description" content="读取模型数据，仅渲染展示，提供下载 GLTF、生成分享链接、社交分享按钮和嵌入代码"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="模型预览"><meta name="twitter:description" content="读取模型数据，仅渲染展示，提供下载 GLTF、生成分享链接、社交分享按钮和嵌入代码"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"模型预览","description":"读取模型数据，仅渲染展示，提供下载 GLTF、生成分享链接、社交分享按钮和嵌入代码","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="dashboard.html">我的项目</a></li>
+            <li><a href="editor.html">模型编辑器</a></li>
+            <li><a href="library.html">素材库</a></li>
+            <li><a href="preview.html">模型预览</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="settings.html">账户设置</a></li>
+            <li><a href="login.html">登录 / 注册</a></li>
+        </ul>
+    </div>
+    <div class="header">
+        <h1>WebGL 3D 在线编辑器</h1>
+    </div>
+    <div class="container">
+        
+<divclass="card" style="flex:2;">
+    <h1 id="modelTitle">加载中...</h1>
+    <div id="loadingMsg" class="loading">正在加载模型数据...</div>
+    <canvas id="glcanvas" style="display:none;"></canvas>
+    <div id="errorMsg" class="error" style="display:none;"></div>
+    <div class="controls" id="controls" style="display:none;">
+        <button class="btn" id="downloadBtn">下载 GLTF</button>
+        <button class="btn btn-secondary" id="editBtn">编辑模型</button>
+        <button class="btn btn-secondary" id="copyLinkBtn">复制分享链接</button>
+        <button class="btn btn-secondary" id="shareBtn">社交分享</button>
+    </div>
+</div>
+<div class="card info-panel" style="flex:1;">
+    <h3>模型信息</h3>
+    <div class="info-row">
+        <span class="info-label">模型ID</span>
+        <span class="info-value" id="infoId">-</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">名称</span>
+        <span class="info-value" id="infoName">-</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">顶点数</span>
+        <span class="info-value" id="infoVtx">-</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">面数</span>
+        <span class="info-value" id="infoFaces">-</span>
+    </div>
+    <div class="info-row">
+        <span class="info-label">嵌入代码</span>
+        <textarea id="embedCode" readonly style="width:100%;height:60px;margin-top:4px;"></textarea>
+    </div>
+</div>
+
 <style>
 :root{
-    --primary:#0d6efd;
-    --secondary:#6c757d;
+    --primary:#3498db;
+    --secondary:#95a5a6;
     --radius-card:8px;
     --radius-btn:4px;
     --gap:8px;
@@ -16,7 +122,7 @@
 body{
     margin:0;
     font-family:var(--font-family);
-    background:#f8f9fa;
+    background:#f9f9f9;
     padding-top:56px;
 }
 .container{
@@ -49,11 +155,12 @@ p{color:#555;line-height:1.5;}
     margin-right:var(--gap);
     margin-bottom:var(--gap);
 }
-.btn:hover{background:#0b5ed7;}
+.btn:hover{background:#2980b9;}
 .btn-secondary{
     background:var(--secondary);
+    color:#fff;
 }
-.btn-secondary:hover{background:#5a6268;}
+.btn-secondary:hover{background:#7f8c8d;}
 #glcanvas{
     width:100%;
     height:500px;
@@ -95,7 +202,7 @@ p{color:#555;line-height:1.5;}
 .error{
     text-align:center;
     padding:calc(var(--gap)*4);
-    color:#dc3545;
+    color:#e74c3c;
 }
 .controls{
     margin-top:var(--gap);
@@ -107,659 +214,159 @@ p{color:#555;line-height:1.5;}
     .container{flex-direction:column;}
     #glcanvas{height:300px;}
 }
-</style><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="模型预览 / 分享"><meta property="og:description" content="读取模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="模型预览 / 分享"><meta name="twitter:description" content="读取模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"模型预览 / 分享","description":"读取模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style>
-<meta name="description" content="读取 ?id= 参数的最新模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="模型预览 / 分享"><meta property="og:description" content="读取 ?id= 参数的最新模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="模型预览 / 分享"><meta name="twitter:description" content="读取 ?id= 参数的最新模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"模型预览 / 分享","description":"读取 ?id= 参数的最新模型数据，仅渲染展示并提供下载 GLTF、生成分享链接的功能。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
-<body>
-
-<div class="container">
-    <div class="card" style="flex:2;">
-        <h1 id="modelTitle">加载中...</h1>
-        <div id="loadingMsg" class="loading">正在加载模型数据...</div>
-        <canvas id="glcanvas" style="display:none;"></canvas>
-        <div id="errorMsg" class="error" style="display:none;"></div>
-        <div class="controls" id="controls" style="display:none;">
-            <button class="btn" id="downloadBtn">下载 GLTF</button>
-            <button class="btn btn-secondary" id="editBtn">编辑模型</button>
-            <button class="btn btn-secondary" id="copyLinkBtn">复制分享链接</button>
-        </div>
-    </div>
-    <div class="card info-panel" style="flex:1;">
-        <h3>模型信息</h3>
-        <div class="info-row">
-            <span class="info-label">模型ID</span>
-            <span class="info-value" id="infoId">-</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">名称</span>
-            <span class="info-value" id="infoName">-</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">顶点数</span>
-            <span class="info-value" id="infoVertices">-</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">面数</span>
-            <span class="info-value" id="infoFaces">-</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">创建时间</span>
-            <span class="info-value" id="infoCreated">-</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">最后更新</span>
-            <span class="info-value" id="infoUpdated">-</span>
-        </div>
-        <h3 style="margin-top:calc(var(--gap)*2);">分享链接</h3>
-        <input type="text" class="share-link" id="shareLink" readonly>
-        <p style="font-size:0.8rem;color:#666;margin-top:4px;">复制此链接分享给他人查看此模型</p>
-        <div style="margin-top:calc(var(--gap)*2);">
-            <a class="btn" href="dashboard.html">返回我的项目</a>
-            <a class="btn btn-secondary" href="index.html">返回首页</a>
-        </div>
-    </div>
-</div>
+</style>
 
 <script>
 (function(){
-    // 获取URL参数
-    function getParam(name){
-        return new URLSearchParams(location.search).get(name);
+    const qs = new URLSearchParams(location.search);
+    const modelId = qs.get('id');
+    const titleEl = document.getElementById('modelTitle');
+    const loadingEl = document.getElementById('loadingMsg');
+    const errorEl = document.getElementById('errorMsg');
+    const controlsEl = document.getElementById('controls');
+    const canvas = document.getElementById('glcanvas');
+    const infoId = document.getElementById('infoId');
+    const infoName = document.getElementById('infoName');
+    const infoVtx = document.getElementById => document.getElementById('infoVtx'));
+    const infoFaces = document.getElementById('infoFaces');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const editBtn = document.getElementById('editBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const embedCode = document.getElementById('embedCode');
+
+    function showError(msg){
+        loadingEl.style.display='none';
+        errorEl.textContent = msg;
+        errorEl.style.display='block';
     }
-
-    // 加载模型数据
-    function loadModels(){
-        try{
-            var raw = localStorage.getItem('models');
-            return raw ? JSON.parse(raw) : {};
-        }catch(e){
-            return {};
-        }
+    if(!modelId){
+        showError('缺少模型 ID 参数');
+        return;
     }
-
-    // 生成唯一ID
-    function uuid(){
-        return 'm'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);
+    const stored = localStorage.getItem('model_'+modelId);
+    if(!stored){
+        showError('未找到模型数据');
+        return;
     }
-
-    // 创建默认立方体几何数据
-    function createCubeGeometry(){
-        var positions = [
-            // 前面
-            -1,-1, 1,  1,-1, 1,  1, 1, 1, -1, 1, 1,
-            // 后面
-             1,-1,-1, -1,-1,-1, -1, 1,-1,  1, 1,-1,
-            // 上面
-            -1, 1, 1,  1, 1, 1,  1, 1,-1, -1, 1,-1,
-            // 下面
-            -1,-1,-1,  1,-1,-1,  1,-1, 1, -1,-1, 1,
-            // 右面
-             1,-1, 1,  1,-1,-1,  1, 1,-1,  1, 1, 1,
-            // 左面
-            -1,-1,-1, -1,-1, 1, -1, 1, 1, -1, 1,-1
-        ];
-        var normals = [
-            0,0,1, 0,0,1, 0,0,1, 0,0,1,
-            0,0,-1, 0,0,-1, 0,0,-1, 0,0,-1,
-            0,1,0, 0,1,0, 0,1,0, 0,1,0,
-            0,-1,0, 0,-1,0, 0,-1,0, 0,-1,0,
-            1,0,0, 1,0,0, 1,0,0, 1,0,0,
-            -1,0,0, -1,0,0, -1,0,0, -1,0,0
-        ];
-        var indices = [
-            0,1,2, 0,2,3,
-            4,5,6, 4,6,7,
-            8,9,10, 8,10,11,
-            12,13,14, 12,14,15,
-            16,17,18, 16,18,19,
-            20,21,22, 20,22,23
-        ];
-        return {
-            positions: positions,
-            normals: normals,
-            indices: indices,
-            vertexCount: 24,
-            faceCount: 12
-        };
+    let model;
+    try{
+        model = JSON.parse(stored);
+    }catch(e){
+        showError('模型数据格式错误');
+        return;
     }
-
-    // 创建球体几何数据
-    function createSphereGeometry(radius, segments){
-        radius = radius || 1;
-        segments = segments || 16;
-        var positions = [];
-        var normals = [];
-        var indices = [];
-        
-        for(var lat = 0; lat <= segments; lat++){
-            var theta = lat * Math.PI / segments;
-            var sinTheta = Math.sin(theta);
-            var cosTheta = Math.cos(theta);
-            
-            for(var lon = 0; lon <= segments; lon++){
-                var phi = lon * 2 * Math.PI / segments;
-                var sinPhi = Math.sin(phi);
-                var cosPhi = Math.cos(phi);
-                
-                var x = cosPhi * sinTheta;
-                var y = cosTheta;
-                var z = sinPhi * sinTheta;
-                
-                normals.push(x, y, z);
-                positions.push(radius * x, radius * y, radius * z);
-            }
-        }
-        
-        for(var lat = 0; lat < segments; lat++){
-            for(var lon = 0; lon < segments; lon++){
-                var first = lat * (segments + 1) + lon;
-                var second = first + segments + 1;
-                
-                indices.push(first, second, first + 1);
-                indices.push(second, second + 1, first + 1);
-            }
-        }
-        
-        return {
-            positions: positions,
-            normals: normals,
-            indices: indices,
-            vertexCount: positions.length / 3,
-            faceCount: indices.length / 3
-        };
+    if(!model.vertices || !model.indices){
+        showError('模型数据缺少必要字段');
+        return;
     }
-
-    // WebGL 渲染器
-    var WebGLRenderer = {
-        canvas: null,
-        gl: null,
-        program: null,
-        modelData: null,
-        rotation: {x: 0.3, y: 0.5},
-        isDragging: false,
-        lastMouse: {x: 0, y: 0},
-        
-        init: function(canvas, modelData){
-            this.canvas = canvas;
-            this.modelData = modelData;
-            this.gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-            if(!this.gl){
-                return false;
-            }
-            
-            var gl = this.gl;
-            
-            // 顶点着色器
-            var vsSource = [
-                'attribute vec3 aPosition;',
-                'attribute vec3 aNormal;',
-                'uniform mat4 uModelViewMatrix;',
-                'uniform mat4 uProjectionMatrix;',
-                'uniform mat3 uNormalMatrix;',
-                'varying vec3 vNormal;',
-                'varying vec3 vPosition;',
-                'void main(){',
-                '  vec4 mvPosition = uModelViewMatrix * vec4(aPosition, 1.0);',
-                '  vPosition = mvPosition.xyz;',
-                '  vNormal = normalize(uNormalMatrix * aNormal);',
-                '  gl_Position = uProjectionMatrix * mvPosition;',
-                '}'
-            ].join('\n');
-            
-            // 片段着色器
-            var fsSource = [
-                'precision mediump float;',
-                'varying vec3 vNormal;',
-                'varying vec3 vPosition;',
-                'uniform vec3 uColor;',
-                'void main(){',
-                '  vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));',
-                '  float diff = max(dot(vNormal, lightDir), 0.0);',
-                '  vec3 ambient = uColor * 0.3;',
-                '  vec3 diffuse = uColor * diff * 0.7;',
-                '  gl_FragColor = vec4(ambient + diffuse, 1.0);',
-                '}'
-            ].join('\n');
-            
-            // 编译着色器
-            var vertexShader = this.compileShader(gl.VERTEX_SHADER, vsSource);
-            var fragmentShader = this.compileShader(gl.FRAGMENT_SHADER, fsSource);
-            
-            if(!vertexShader || !fragmentShader){
-                return false;
-            }
-            
-            // 创建程序
-            this.program = gl.createProgram();
-            gl.attachShader(this.program, vertexShader);
-            gl.attachShader(this.program, fragmentShader);
-            gl.linkProgram(this.program);
-            
-            if(!gl.getProgramParameter(this.program, gl.LINK_STATUS)){
-                return false;
-            }
-            
-            gl.useProgram(this.program);
-            
-            // 创建缓冲区
-            this.createBuffers();
-            
-            // 设置交互
-            this.setupInteraction();
-            
-            // 开始渲染
-            this.render();
-            
-            return true;
-        },
-        
-        compileShader: function(type, source){
-            var gl = this.gl;
-            var shader = gl.createShader(type);
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-            if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
-                gl.deleteShader(shader);
-                return null;
-            }
-            return shader;
-        },
-        
-        createBuffers: function(){
-            var gl = this.gl;
-            var data = this.modelData.geometry;
-            
-            // 位置缓冲区
-            this.positionBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.positions), gl.STATIC_DRAW);
-            
-            // 法线缓冲区
-            this.normalBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.normals), gl.STATIC_DRAW);
-            
-            // 索引缓冲区
-            this.indexBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(data.indices), gl.STATIC_DRAW);
-            
-            this.indexCount = data.indices.length;
-        },
-        
-        setupInteraction: function(){
-            var self = this;
-            var canvas = this.canvas;
-            
-            canvas.addEventListener('mousedown', function(e){
-                self.isDragging = true;
-                self.lastMouse.x = e.clientX;
-                self.lastMouse.y = e.clientY;
-            });
-            
-            canvas.addEventListener('mousemove', function(e){
-                if(!self.isDragging) return;
-                var dx = e.clientX - self.lastMouse.x;
-                var dy = e.clientY - self.lastMouse.y;
-                self.rotation.y += dx * 0.01;
-                self.rotation.x += dy * 0.01;
-                self.lastMouse.x = e.clientX;
-                self.lastMouse.y = e.clientY;
-            });
-            
-            canvas.addEventListener('mouseup', function(){
-                self.isDragging = false;
-            });
-            
-            canvas.addEventListener('mouseleave', function(){
-                self.isDragging = false;
-            });
-            
-            // 触摸支持
-            canvas.addEventListener('touchstart', function(e){
-                if(e.touches.length === 1){
-                    self.isDragging = true;
-                    self.lastMouse.x = e.touches[0].clientX;
-                    self.lastMouse.y = e.touches[0].clientY;
-                    e.preventDefault();
-                }
-            }, {passive: false});
-            
-            canvas.addEventListener('touchmove', function(e){
-                if(!self.isDragging || e.touches.length !== 1) return;
-                var dx = e.touches[0].clientX - self.lastMouse.x;
-                var dy = e.touches[0].clientY - self.lastMouse.y;
-                self.rotation.y += dx * 0.01;
-                self.rotation.x += dy * 0.01;
-                self.lastMouse.x = e.touches[0].clientX;
-                self.lastMouse.y = e.touches[0].clientY;
-                e.preventDefault();
-            }, {passive: false});
-            
-            canvas.addEventListener('touchend', function(){
-                self.isDragging = false;
-            });
-        },
-        
-        render: function(){
-            var self = this;
-            var gl = this.gl;
-            var canvas = this.canvas;
-            
-            function frame(){
-                self.draw();
-                requestAnimationFrame(frame);
-            }
-            frame();
-        },
-        
-        draw: function(){
-            var gl = this.gl;
-            var canvas = this.canvas;
-            
-            // 调整画布大小
-            var displayWidth = canvas.clientWidth;
-            var displayHeight = canvas.clientHeight;
-            if(canvas.width !== displayWidth || canvas.height !== displayHeight){
-                canvas.width = displayWidth;
-                canvas.height = displayHeight;
-            }
-            
-            gl.viewport(0, 0, canvas.width, canvas.height);
-            gl.clearColor(0.1, 0.1, 0.18, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-            gl.enable(gl.DEPTH_TEST);
-            gl.enable(gl.CULL_FACE);
-            
-            // 获取属性和uniform位置
-            var aPosition = gl.getAttribLocation(this.program, 'aPosition');
-            var aNormal = gl.getAttribLocation(this.program, 'aNormal');
-            var uModelViewMatrix = gl.getUniformLocation(this.program, 'uModelViewMatrix');
-            var uProjectionMatrix = gl.getUniformLocation(this.program, 'uProjectionMatrix');
-            var uNormalMatrix = gl.getUniformLocation(this.program, 'uNormalMatrix');
-            var uColor = gl.getUniformLocation(this.program, 'uColor');
-            
-            // 计算矩阵
-            var aspect = canvas.width / canvas.height;
-            var projectionMatrix = this.perspectiveMatrix(45 * Math.PI / 180, aspect, 0.1, 100);
-            var modelViewMatrix = this.modelViewMatrix(this.rotation.x, this.rotation.y, 5);
-            var normalMatrix = this.normalMatrix(modelViewMatrix);
-            
-            // 设置uniform
-            gl.uniformMatrix4fv(uProjectionMatrix, false, projectionMatrix);
-            gl.uniformMatrix4fv(uModelViewMatrix, false, modelViewMatrix);
-            gl.uniformMatrix3fv(uNormalMatrix, false, normalMatrix);
-            gl.uniform3f(uColor, 0.13, 0.43, 0.99); // 主色 #0d6efd
-            
-            // 绑定位置缓冲区
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-            gl.enableVertexAttribArray(aPosition);
-            gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, 0, 0);
-            
-            // 绑定法线缓冲区
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
-            gl.enableVertexAttribArray(aNormal);
-            gl.vertexAttribPointer(aNormal, 3, gl.FLOAT, false, 0, 0);
-            
-            // 绑定索引缓冲区并绘制
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-            gl.drawElements(gl.TRIANGLES, this.indexCount, gl.UNSIGNED_SHORT, 0);
-        },
-        
-        perspectiveMatrix: function(fov, aspect, near, far){
-            var f = 1.0 / Math.tan(fov / 2);
-            var nf = 1 / (near - far);
-            return new Float32Array([
-                f / aspect, 0, 0, 0,
-                0, f, 0, 0,
-                0, 0, (far + near) * nf, -1,
-                0, 0, 2 * far * near * nf, 0
-            ]);
-        },
-        
-        modelViewMatrix: function(rotX, rotY, distance){
-            var cx = Math.cos(rotX), sx = Math.sin(rotX);
-            var cy = Math.cos(rotY), sy = Math.sin(rotY);
-            return new Float32Array([
-                cy, sx * sy, -cx * sy, 0,
-                0, cx, sx, 0,
-                sy, -sx * cy, cx * cy, 0,
-                0, 0, -distance, 1
-            ]);
-        },
-        
-        normalMatrix: function(m){
-            var a = m[0], b = m[1], c = m[2];
-            var d = m[4], e = m[5], f = m[6];
-            var g = m[8], h = m[9], i = m[10];
-            
-            var det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
-            var invDet = 1 / det;
-            
-            return new Float32Array([
-                (e * i - f * h) * invDet, (c * h - b * i) * invDet, (b * f - c * e) * invDet,
-                (f * g - d * i) * invDet, (a * i - c * g) * invDet, (c * d - a * f) * invDet,
-                (d * h - e * g) * invDet, (b * g - a * h) * invDet, (a * e - b * d) * invDet
-            ]);
-        }
-    };
-
-    // 生成GLTF JSON
-    function generateGLTF(modelData){
-        var data = modelData.geometry;
-        var positions = data.positions;
-        var normals = data.normals;
-        var indices = data.indices;
-        
-        // 计算边界框
-        var minX = Infinity, minY = Infinity, minZ = Infinity;
-        var maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
-        for(var i = 0; i < positions.length; i += 3){
-            minX = Math.min(minX, positions[i]);
-            minY = Math.min(minY, positions[i + 1]);
-            minZ = Math.min(minZ, positions[i + 2]);
-            maxX = Math.max(maxX, positions[i]);
-            maxY = Math.max(maxY, positions[i + 1]);
-            maxZ = Math.max(maxZ, positions[i + 2]);
-        }
-        
-        // 创建二进制数据
-        var posByteLength = positions.length * 4;
-        var normByteLength = normals.length * 4;
-        var indByteLength = indices.length * 2;
-        var totalByteLength = posByteLength + normByteLength + indByteLength;
-        
-        var buffer = new ArrayBuffer(totalByteLength);
-        var posView = new Float32Array(buffer, 0, positions.length);
-        var normView = new Float32Array(buffer, posByteLength, normals.length);
-        var indView = new Uint16Array(buffer, posByteLength + normByteLength, indices.length);
-        
-        posView.set(positions);
-        normView.set(normals);
-        indView.set(indices);
-        
-        // 转换为base64
-        var binaryStr = '';
-        var bytes = new Uint8Array(buffer);
-        for(var i = 0; i < bytes.length; i++){
-            binaryStr += String.fromCharCode(bytes[i]);
-        }
-        var base64 = btoa(binaryStr);
-        
-        var gltf = {
-            asset: {
-                version: "2.0",
-                generator: "WebGL 3D Editor"
-            },
-            scene: 0,
-            scenes: [{nodes: [0]}],
-            nodes: [{mesh: 0}],
-            meshes: [{
-                primitives: [{
-                    attributes: {
-                        POSITION: 0,
-                        NORMAL: 1
-                    },
-                    indices: 2
-                }]
-            }],
-            accessors: [
-                {
-                    bufferView: 0,
-                    componentType: 5126,
-                    count: positions.length / 3,
-                    type: "VEC3",
-                    max: [maxX, maxY, maxZ],
-                    min: [minX, minY, minZ]
-                },
-                {
-                    bufferView: 1,
-                    componentType: 5126,
-                    count: normals.length / 3,
-                    type: "VEC3"
-                },
-                {
-                    bufferView: 2,
-                    componentType: 5123,
-                    count: indices.length,
-                    type: "SCALAR"
-                }
-            ],
-            bufferViews: [
-                {buffer: 0, byteOffset: 0, byteLength: posByteLength, target: 34962},
-                {buffer: 0, byteOffset: posByteLength, byteLength: normByteLength, target: 34962},
-                {buffer: 0, byteOffset: posByteLength + normByteLength, byteLength: indByteLength, target: 34963}
-            ],
-            buffers: [{
-                uri: "data:application/octet-stream;base64," + base64,
-                byteLength: totalByteLength
-            }]
-        };
-        
-        return JSON.stringify(gltf, null, 2);
-    }
-
-    // 下载文件
-    function downloadFile(content, filename, mimeType){
-        var blob = new Blob([content], {type: mimeType});
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-    // 格式化日期
-    function formatDate(timestamp){
-        var d = new Date(timestamp);
-        return d.toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-
-    // 初始化
-    function init(){
-        var modelId = getParam('id');
-        var models = loadModels();
-        var modelData = modelId ? models[modelId] : null;
-        
-        // 如果没有找到模型，创建一个默认的
-        if(!modelData){
-            // 检查是否有示例数据
-            if(Object.keys(models).length === 0){
-                // 创建示例模型
-                var exampleId = uuid();
-                var now = Date.now();
-                models[exampleId] = {
-                    id: exampleId,
-                    name: "示例立方体",
-                    geometry: createCubeGeometry(),
-                    created: now,
-                    updated: now
-                };
-                models[exampleId + "_sphere"] = {
-                    id: exampleId + "_sphere",
-                    name: "示例球体",
-                    geometry: createSphereGeometry(1, 24),
-                    created: now,
-                    updated: now
-                };
-                localStorage.setItem('models', JSON.stringify(models));
-            }
-            
-            // 使用第一个模型
-            var firstKey = Object.keys(models)[0];
-            modelId = firstKey;
-            modelData = models[firstKey];
-        }
-        
-        // 更新UI
-        document.getElementById('modelTitle').textContent = modelData.name || "未命名模型";
-        document.getElementById('infoId').textContent = modelId;
-        document.getElementById('infoName').textContent = modelData.name || "未命名模型";
-        document.getElementById('infoVertices').textContent = modelData.geometry ? modelData.geometry.vertexCount : 0;
-        document.getElementById('infoFaces').textContent = modelData.geometry ? modelData.geometry.faceCount : 0;
-        document.getElementById('infoCreated').textContent = modelData.created ? formatDate(modelData.created) : "-";
-        document.getElementById('infoUpdated').textContent = modelData.updated ? formatDate(modelData.updated) : "-";
-        
-        // 生成分享链接
-        var shareUrl = location.origin + location.pathname + "?id=" + modelId;
-        document.getElementById('shareLink').value = shareUrl;
-        
-        // 隐藏加载消息，显示画布
-        document.getElementById('loadingMsg').style.display = 'none';
-        document.getElementById('glcanvas').style.display = 'block';
-        document.getElementById('controls').style.display = 'flex';
-        
-        // 初始化WebGL
-        var canvas = document.getElementById('glcanvas');
-        var success = WebGLRenderer.init(canvas, modelData);
-        
-        if(!success){
-            document.getElementById('glcanvas').style.display = 'none';
-            document.getElementById('errorMsg').style.display = 'block';
-            document.getElementById('errorMsg').textContent = "WebGL 初始化失败，请确保您的浏览器支持 WebGL。";
-        }
-        
-        // 绑定按钮事件
-        document.getElementById('downloadBtn').addEventListener('click', function(){
-            var gltf = generateGLTF(modelData);
-            downloadFile(gltf, (modelData.name || 'model') + '.gltf', 'model/gltf+json');
-        });
-        
-        document.getElementById('editBtn').addEventListener('click', function(){
-            location.href = 'editor.html?id=' + modelId;
-        });
-        
-        document.getElementById('copyLinkBtn').addEventListener('click', function(){
-            var linkInput = document.getElementById('shareLink');
-            linkInput.select();
-            try{
-                document.execCommand('copy');
-                this.textContent = '已复制!';
-                var self = this;
-                setTimeout(function(){
-                    self.textContent = '复制分享链接';
-                }, 2000);
-            }catch(e){
-                prompt('请手动复制以下链接:', linkInput.value);
-            }
-        });
-    }
-
-    // 页面加载完成后初始化
-    if(document.readyState === 'loading'){
-        document.addEventListener('DOMContentLoaded', init);
+    const vertices = new Float32Array(model.vertices);
+    const indices = (model.indices && model.indices.length>0) ? new Uint16Array(model.indices) : null;
+    const colors = model.colors ? new Float32Array(model.colors) : new Float32Array(vertices.length/3*4).fill(1.0); // default white
+    // compute normals if not provided
+    let normals;
+    if(model.normals && model.normals.length===vertices.length){
+        normals = new Float32Array(model.normals);
     }else{
-        init();
+        normals = computeNormals(vertices, indices);
     }
-})();
-</script>
+    // info
+    titleEl.textContent = model.name || '未命名模型';
+    infoId.textContent = modelId;
+    infoName.textContent = model.name || '-';
+    infoVtx.textContent = vertices.length/3;
+    infoFaces.textContent = indices ? indices.length/3 : 0;
+    // WebGL init
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if(!gl){ showError('浏览器不支持 WebGL'); return; }
+    // Shaders
+    const vs = `
+        attribute vec3 position;
+        attribute vec3 normal;
+        attribute vec4 color;
+        uniform mat4 uMVP;
+        varying vec4 vColor;
+        void main(){
+            vColor = color;
+            gl_Position = uMVP * vec4(position,1.0);
+        }
+    `;
+    const fs = `
+        precision mediump float;
+        varying vec4 vColor;
+        void main(){ gl_FragColor = vColor; }
+    `;
+    function compileShader(src,type){
+        const sh = gl.createShader(type);
+        gl.shaderSource(sh,src);
+        gl.compileShader(sh);
+        if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS)){
+            throw new Error(gl.getShaderInfoLog(sh));
+        }
+        return sh;
+    }
+    const prog = gl.createProgram();
+    gl.attachProg(prog,compileShader(vs,gl.VERTEX_SHADER));
+    gl.attachProg(prog,compileShader(fs,gl.FRAGMENT_SHADER));
+    gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){
+        throw new Error('程序链接失败: '+gl.getProgramInfoLog(prog));
+    }
+    gl.useProgram(prog);
+    // attribute locations
+    const posLoc = gl.getAttribLocation(prog,'position');
+    const normLoc = gl.getAttribLocation(prog,'normal');
+    const colLoc = gl.getAttribLocation(prog,'color');
+    const mvpLoc = gl.getUniformLocation(prog,'uMVP');
+    // buffers
+    function createBuffer(data,itemSize,loc){
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+        gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc,itemSize,gl.FLOAT,false,0,0);
+        return buf;
+    }
+    createBuffer(vertices,3,posLoc);
+    createBuffer(normals,3,normLoc);
+    createBuffer(colors,4,colLoc);
+    const idxBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,idxBuf);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,indices || new Uint16Array([0]),gl.STATIC_DRAW);
+    // matrices
+    function perspective(fov, aspect, near, far){
+        const f = 1.0/Math.tan(fov/2);
+        const nf = 1/(near-far);
+        return [
+            f/aspect,0,0,0,
+            0,f,0,0,
+            0,0,(far+near)*nf,-1,
+            0,0,2*far*near*nf,0
+        ];
+    }
+    function translate(m,tx,ty,tz){
+        return [
+            m[0],m[1],m[2],m[3],
+            m[4],m[5],m[6],m[7],
+            m[8],m[9],m[10],m[11],
+            m[0]*tx+m[4]*ty+m[8]*tz+m[12],
+            m[1]*tx+m[5]*ty+m[9]*tz+m[13],
+            m[2]*tx+m[6]*ty+m[10]*tz+m[14],
+            m[3]*tx+m[7]*ty+m[11]*tz+m[15]
+        ];
+    }
+    function rotateX(m,angle){
+        const c=Math.cos(angle), s=Math.sin(angle);
+        return [
+            m[0],m[1],m[2],m[3],
+            m[4]*c+m[8]*s, m[5]*c+m[9]*s, m[6]*c+m[10]*s, m[7]*c+m[11]*s,
+            m[8]*c-m[4]*s, m[9]*c-m[5]*s, m[10]*c-m[6]*s, m[11]*c-m[7]*s,
+            m[12],m[13],m[14],m[15]
+        ];
+    }
+    function rotateY(m,angle){
+        // ... (truncated for brevity)
+
+    </div>
 <footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
 </html>
