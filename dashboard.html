@@ -1,192 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>我的项目</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的项目">
-<meta property="og:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的项目">
-<meta name="twitter:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。">
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebApplication",
-  "name":"我的项目",
-  "description":"列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。",
-  "applicationCategory":"UtilitiesApplication",
-  "operatingSystem":"Any",
-  "offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}
-}
-</script>
-<style>
-:root{
-    --primary:#0d6efd;
-    --secondary:#6c757d;
-    --radius-card:8px;
-    --radius-btn:4px;
-    --gap:8px;
-    --font-family:"Helvetica Neue",Arial,sans-serif;
-}
-body{
-    margin:0;
-    font-family:var(--font-family);
-    background:#f8f9fa;
-    padding-top:56px;/*导航高度占位*/
-}
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:var(--gap);
-    display:flex;
-    flex-wrap:wrap;
-    gap:var(--gap);
-}
-.toolbar{
-    width:100%;
-    margin-bottom:calc(var(--gap)*2);
-}
-.card{
-    background:#fff;
-    border-radius:var(--radius-card);
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    padding:calc(var(--gap)*2);
-    flex:1 1 300px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-.card h3{
-    margin:0 0 var(--gap) 0;
-    word-break:break-all;
-}
-.btn{
-    display:inline-block;
-    padding:0.4em 0.8em;
-    background:var(--primary);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius-btn);
-    cursor:pointer;
-    text-decoration:none;
-    font-size:0.9rem;
-    transition:background .2s;
-    margin-right:var(--gap);
-}
-.btn:hover{
-    background:#0b5ed7;
-}
-@media (max-width:600px){
-    .container{flex-direction:column;}
-}
-</style>
-<meta name="description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="我的项目"><meta property="og:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="我的项目"><meta name="twitter:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"我的项目","description":"列出用户所有模型与历史版本，支持新建、编辑、复制、删除；点击任意模型跳转 editor.html?id=模型ID。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的项目</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .nav-bar {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 16px;
+            text-align: center;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-bar li {
+            margin-right: 16px;
+        }
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 16px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .nav-bar ul {
+                flex-direction: column;
+            }
+            .nav-bar li {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+<meta name="description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除，跳转至 editor.html"><meta name="keywords" content="WebGL, 3D 编辑器, 在线编辑, 协作编辑, 模型渲染"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="我的项目"><meta property="og:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除，跳转至 editor.html"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="我的项目"><meta name="twitter:description" content="列出用户所有模型与历史版本，支持新建、编辑、复制、删除，跳转至 editor.html"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"我的项目","description":"列出用户所有模型与历史版本，支持新建、编辑、复制、删除，跳转至 editor.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
 <body>
-<div class="container">
-    <div class="toolbar">
-        <button class="btn" id="newModelBtn">新建模型</button>
-        <a class="btn" href="library.html">素材库</a>
-        <a class="btn" href="settings.html">账户设置</a>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="dashboard.html">我的项目</a></li>
+            <li><a href="editor.html">模型编辑器</a></li>
+            <li><a href="library.html">素材库</a></li>
+            <li><a href="preview.html">模型预览</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="settings.html">账户设置</a></li>
+            <li><a href="login.html">登录 / 注册</a></li>
+        </ul>
     </div>
-    <div id="modelList" class="container"></div>
+    <div class="header">
+        <h1>WebGL 3D 在线编辑器</h1>
+    </div>
+    <div class="container">
+        
+<div class="toolbar" style="margin-bottom:16px;">
+    <button class="btn" id="newModelBtn">新建模型</button>
+    <a class="btn" href="library.html">素材库</a>
+    <a class="btn" href="settings.html">账户设置</a>
 </div>
-
+<ul id="modelList" style="list-style:none;padding:0;margin:0;"></ul>
 <script>
-// 简单的唯一 ID 生成
 function uuid(){return 'm'+Date.now()+Math.random().toString(16).slice(2);}
-
-// 本地存储读取/写入
-function loadModels(){
-    const raw = localStorage.getItem('models');
-    return raw ? JSON.parse(raw) : {};
-}
-function saveModels(data){
-    localStorage.setItem('models',JSON.stringify(data));
-}
-
-// 渲染模型列表
+function loadModels(){return JSON.parse(localStorage.getItem('models')||'{}');}
+function saveModels(models){localStorage.setItem('models',JSON.stringify(models));}
 function render(){
-    const models = loadModels();
-    const list = document.getElementById('modelList');
+    const list=document.getElementById('modelList');
+    const models=loadModels();
     list.innerHTML='';
     if(Object.keys(models).length===0){
-        const empty = document.createElement('p');
+        const empty=document.createElement('li');
+        empty.style.textAlign='center';
+        empty.style.padding='16px';
+        empty.style.color='rgba(0,0,0,0.5)';
         empty.textContent='暂无模型，点击“新建模型”开始创作。';
-        empty.style.padding='var(--gap)';
-        empty.style.color='#555';
         list.appendChild(empty);
         return;
     }
     for(const id in models){
-        const m = models[id];
-        const card=document.createElement('div');
-        card.className='card';
-        card.innerHTML=`
-            <h3 title="${m.name}">${m.name}</h3>
-            <p style="margin:0 0 var(--gap) 0;color:#666;font-size:0.85rem;">
-                创建于 ${new Date(m.created).toLocaleString()}
-            </p>
-            <div>
-                <a class="btn" href="editor.html?id=${id}">编辑</a>
-                <button class="btn copyBtn">复制</button>
-                <button class="btn deleteBtn">删除</button>
+        const m=models[id];
+        const li=document.createElement('li');
+        li.style.padding='8px';
+        li.style.borderBottom='1px solid #ddd';
+        li.innerHTML=`
+            <div class="card" style="background-color:#fff;padding:16px;border-radius:8px;box-shadow:0 0 8px rgba(0,0,0,0.1);">
+                <h3 style="margin:0 0 8px 0;">${m.name}</h3>
+                <p style="margin:0 0 8px 0;font-size:0.9rem;color:rgba(0,0,0,0.5);">
+                    创建于 ${new Date(m.created).toLocaleString()}
+                </p>
+                <div>
+                    <a class="btn" href="editor.html?id=${id}" style="margin-right:8px;">编辑</a>
+                    <button class="btn copyBtn" data-id="${id}" style="margin-right:8px;">复制</button>
+                    <button class="btn deleteBtn" data-id="${id}">删除</button>
+                </div>
             </div>
         `;
-        card.querySelector('.copyBtn').onclick=()=>copyModel(id);
-        card.querySelector('.deleteBtn').onclick=()=>deleteModel(id);
-        list.appendChild(card);
+        list.appendChild(li);
     }
 }
-
-// 新建模型
-document.getElementById('newModelBtn').onclick=()=>{
-    const name=prompt('请输入模型名称：','新模型');
-    if(!name) return;
+document.getElementById('newModelBtn').addEventListener('click',()=>{
+    const name=prompt('请输入模型名称：','未命名模型');
+    if(name===null) return;
     const id=uuid();
-    const now=Date.now();
     const models=loadModels();
-    models[id]={
-        id,
-        name,
-        created:now,
-        versions:[{id:uuid(),timestamp:now,data:'{cube:1}'}]
-    };
+    models[id]={name,created:Date.now()};
     saveModels(models);
     render();
-};
-
-// 复制模型
-function copyModel(srcId){
-    const models=loadModels();
-    const src=models[srcId];
-    if(!src) return;
-    const newId=uuid();
-    const now=Date.now();
-    const copy={
-        id:newId,
-        name:src.name+'_副本',
-        created:now,
-        versions:JSON.parse(JSON.stringify(src.versions))
-    };
-    models[newId]=copy;
-    saveModels(models);
-    render();
-}
-
-// 删除模型
-function deleteModel(id){
-    if(!confirm('确定删除此模型吗？此操作不可恢复。')) return;
-    const models=loadModels();
-    delete models[id];
-    saveModels(models);
-    render();
-}
-
-// 初始渲染
+});
+document.getElementById('modelList').addEventListener('click',e=>{
+    if(e.target.classList.contains('deleteBtn')){
+        const id=e.target.dataset.id;
+        if(confirm('确定删除此模型及其所有版本？')){
+            const models=loadModels();
+            delete models[id];
+            saveModels(models);
+            render();
+        }
+    }
+    if(e.target.classList.contains('copyBtn')){
+        const id=e.target.dataset.id;
+        const models=loadModels();
+        const m=models[id];
+        const newId=uuid();
+        const copyName=m.name+' 副本';
+        models[newId]={name:copyName,created:Date.now()};
+        saveModels(models);
+        render();
+    }
+});
 render();
 </script>
+
+    </div>
 <footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
 </html>
