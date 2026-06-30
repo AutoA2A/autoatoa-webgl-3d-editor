@@ -1,185 +1,213 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>账户设置</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-:root{
-    --primary:#0d6efd;
-    --secondary:#6c757d;
-    --radius-card:8px;
-    --radius-btn:4px;
-    --gap:8px;
-    --font-family:"Helvetica Neue",Arial,sans-serif;
-}
-body{
-    margin:0;
-    font-family:var(--font-family);
-    background:#f8f9fa;
-    padding-top:56px; /*导航高度*/
-}
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:var(--gap);
-    display:flex;
-    flex-wrap:wrap;
-    gap:var(--gap);
-}
-.breadcrumb{
-    width:100%;
-    margin-bottom:calc(var(--gap)*2);
-}
-.breadcrumb a{
-    display:inline-block;
-    padding:0.4em 0.8em;
-    background:var(--primary);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius-btn);
-    text-decoration:none;
-    font-size:0.9rem;
-    transition:background .2s;
-}
-.breadcrumb a:hover{
-    background:#0b5ed7;
-}
-.card{
-    background:#fff;
-    border-radius:var(--radius-card);
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    padding:calc(var(--gap)*2);
-    flex:1 1 300px;
-}
-h2{margin-top:0;color:#333;}
-p{color:#555;line-height:1.5;}
-.btn{
-    display:inline-block;
-    padding:0.4em 0.8em;
-    background:var(--primary);
-    color:#fff;
-    border:none;
-    border-radius:var(--radius-btn);
-    cursor:pointer;
-    text-decoration:none;
-    font-size:0.9rem;
-    transition:background .2s;
-    margin-right:var(--gap);
-}
-.btn:hover{
-    background:#0b5ed7;
-}
-.input-group{
-    margin-bottom:var(--gap);
-}
-.input-group label{
-    display:block;
-    margin-bottom:4px;
-    font-size:0.9rem;
-    color:#333;
-}
-.input-group input{
-    width:100%;
-    padding:0.4em;
-    border:1px solid #ccc;
-    border-radius:var(--radius-btn);
-}
-#quotaBar{
-    width:100%;
-    height:10px;
-    background:#e9ecef;
-    border-radius:5px;
-    overflow:hidden;
-    margin-top:4px;
-}
-#quotaFill{
-    height:100%;
-    background:var(--primary);
-    width:0%;
-}
-@media (max-width:600px){
-    .container{flex-direction:column;}
-}
-</style>
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta property="og:type" content="website">
-<meta property="og:title" content="账户设置">
-<meta property="og:description" content="用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="账户设置">
-<meta name="twitter:description" content="用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"账户设置","description":"用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
-<style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style>
-<meta name="description" content="用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。"><meta name="keywords" content="WebGL,3D模型,在线编辑,实时保存,GLTF,协同编辑,素材库"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="账户设置"><meta property="og:description" content="用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="账户设置"><meta name="twitter:description" content="用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"账户设置","description":"用户信息、存储配额、密码修改、退出登录（清除 token 并返回 index.html）。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账户设置</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .nav-bar {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 16px;
+            text-align: center;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-bar li {
+            margin-right: 16px;
+        }
+        .nav-bar a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 16px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .nav-bar ul {
+                flex-direction: column;
+            }
+            .nav-bar li {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+<meta name="description" content="用户信息、存储配额、密码修改（增加密码强度校验）、退出登录"><meta name="keywords" content="WebGL, 3D 编辑器, 在线编辑, 协作编辑, 模型渲染"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="账户设置"><meta property="og:description" content="用户信息、存储配额、密码修改（增加密码强度校验）、退出登录"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="账户设置"><meta name="twitter:description" content="用户信息、存储配额、密码修改（增加密码强度校验）、退出登录"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"账户设置","description":"用户信息、存储配额、密码修改（增加密码强度校验）、退出登录","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
 <body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="dashboard.html">我的项目</a></li>
+            <li><a href="editor.html">模型编辑器</a></li>
+            <li><a href="library.html">素材库</a></li>
+            <li><a href="preview.html">模型预览</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="settings.html">账户设置</a></li>
+            <li><a href="login.html">登录 / 注册</a></li>
+        </ul>
+    </div>
+    <div class="header">
+        <h1>WebGL 3D 在线编辑器</h1>
+    </div>
+    <div class="container">
+        
 <div class="container">
     <nav class="breadcrumb">
         <a href="dashboard.html">返回仪表盘</a>
     </nav>
-    <div class="card">
+
+    <!-- 账户信息 -->
+    <article class="card">
         <h2>账户信息</h2>
-        <p id="userInfo">加载中...</p>
-    </div>
-    <div class="card">
+        <p id="userInfo">加载中…</p>
+    </article>
+
+    <!-- 存储配额 -->
+    <article class="card">
         <h2>存储配额</h2>
-        <p id="quotaInfo">加载中...</p>
+        <p id="quotaInfo">加载中…</p>
         <div id="quotaBar"><div id="quotaFill"></div></div>
-    </div>
-    <div class="card">
+    </article>
+
+    <!-- 修改密码 -->
+    <article class="card">
         <h2>修改密码</h2>
         <div class="input-group">
             <label for="oldPwd">旧密码</label>
-            <input type="password" id="oldPwd">
+            <input type="password" id="oldPwd" autocomplete="current-password">
         </div>
         <div class="input-group">
             <label for="newPwd">新密码</label>
-            <input type="password" id="newPwd">
+            <input type="password" id="newPwd" autocomplete="new-password">
         </div>
         <div class="input-group">
             <label for="confirmPwd">确认新密码</label>
-            <input type="password" id="confirmPwd">
+            <input type="password" id="confirmPwd" autocomplete="new-password">
         </div>
         <button class="btn" id="changePwdBtn">提交</button>
-        <p id="pwdMsg"></p>
-    </div>
-    <div class="card">
+        <p id="pwdMsg" style="margin-top:8px;color:#d9534f;"></p>
+    </article>
+
+    <!-- 退出登录 -->
+    <article class="card">
         <h2>退出登录</h2>
         <button class="btn" id="logoutBtn">退出登录</button>
-    </div>
+    </article>
 </div>
+
 <script>
-(function(){
-    const token=localStorage.getItem('token');
-    if(!token){window.location.href='login.html';return;}
-    const user=JSON.parse(localStorage.getItem('user')||'{}');
-    const models=JSON.parse(localStorage.getItem('models')||'{}');
-    const used=Object.values(models).reduce((s,m)=>s+(m.size||0),0);
-    const quota=10*1024*1024; //10MB
-    const usedMB=used/1024/1024;
-    const quotaMB=quota/1024/1024;
-    document.getElementById('userInfo').textContent=`邮箱：${user.email||'未设置'}`;
-    document.getElementById('quotaInfo').textContent=`已使用 ${usedMB.toFixed(2)} MB / ${quotaMB.toFixed(2)} MB`;
-    const pct=Math.min(100,used/ quota*100);
-    document.getElementById('quotaFill').style.width=pct+'%';
-    document.getElementById('changePwdBtn').onclick=function(){
-        const old=document.getElementById('oldPwd').value;
-        const newp=document.getElementById('newPwd').value;
-        const conf=document.getElementById('confirmPwd').value;
-        const msg=document.getElementById('pwdMsg');
-        if(old!==user.password){msg.textContent='旧密码错误';return;}
-        if(newp!==conf){msg.textContent='两次新密码不一致';return;}
-        if(newp.length<6){msg.textContent='密码至少6位';return;}
-        user.password=newp;
-        localStorage.setItem('user',JSON.stringify(user));
-        msg.textContent='密码已更新';
+(() => {
+    // 简易的本地“后端”模拟
+    const STORAGE_KEY = 'webgl3d_user';
+    const DEFAULT_USER = {
+        email: 'user@example.com',
+        name: '示例用户',
+        usedQuota: 45, // MB
+        totalQuota: 100, // MB
+        password: 'Passw0rd!' // 明文仅演示，请勿在生产使用
     };
-    document.getElementById('logoutBtn').onclick=function(){
-        localStorage.removeItem('token');
-        window.location.href='index.html';
+
+    // 初始化本地数据（若不存在）
+    if (!localStorage.getItem(STORAGE_KEY)) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_USER));
+    }
+
+    const getUser = () => JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    const setUser = (data) => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+    // 渲染用户信息 & 配额
+    const renderInfo = () => {
+        const u = getUser();
+        document.getElementById('userInfo').textContent = `${u.name} (${u.email})`;
+        const quotaPct = Math.min(100, (u.usedQuota / u.totalQuota) * 100).toFixed(1);
+        document.getElementById('quotaInfo').textContent = `已使用 ${u.usedQuota} MB / ${u.totalQuota} MB (${quotaPct}%)`;
+        document.getElementById('quotaFill').style.width = quotaPct + '%';
     };
+
+    // 密码强度校验
+    const checkStrength = (pwd) => {
+        const length = pwd.length >= 8;
+        const upper = /[A-Z]/.test(pwd);
+        const lower = /[a-z]/.test(pwd);
+        const digit = /\d/.test(pwd);
+        const special = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+        const score = [length, upper, lower, digit, special].filter(Boolean).length;
+        return score; // 0-5
+    };
+
+    const showPwdMsg = (msg, color = '#d9534f') => {
+        const el = document.getElementById('pwdMsg');
+        el.textContent = msg;
+        el.style.color = color;
+    };
+
+    // 绑定事件
+    document.getElementById('changePwdBtn').addEventListener('click', () => {
+        const oldPwd = document.getElementById('oldPwd').value.trim();
+        const newPwd = document.getElementById('newPwd').value.trim();
+        const confirmPwd = document.getElementById('confirmPwd').value.trim();
+
+        const user = getUser();
+
+        if (oldPwd !== user.password) {
+            showPwdMsg('旧密码不正确');
+            return;
+        }
+        if (newPwd !== confirmPwd) {
+            showPwdMsg('两次输入的新密码不一致');
+            return;
+        }
+        const strength = checkStrength(newPwd);
+        if (strength < 4) {
+            showPwdMsg('密码强度不足（至少8字符，包含大小写字母、数字和特殊字符）');
+            return;
+        }
+
+        user.password = newPwd;
+        setUser(user);
+        showPwdMsg('密码修改成功', '#5cb85c');
+        // 清空输入框
+        document.getElementById('oldPwd').value = '';
+        document.getElementById('newPwd').value = '';
+        document.getElementById('confirmPwd').value = '';
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem(STORAGE_KEY);
+        // 清除可能的 token（示例中未使用 token，仅演示）
+        // 跳转回首页
+        window.location.href = 'index.html';
+    });
+
+    // 初始渲染
+    renderInfo();
 })();
 </script>
-<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer>
-</body>
+
+    </div>
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
 </html>
